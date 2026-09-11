@@ -14,7 +14,7 @@ import tseslint from 'typescript-eslint';
 // (https://github.com/google/gts), the reference implementation of
 // https://google.github.io/styleguide/tsguide.html
 export default defineConfig(
-  {ignores: ['dist']},
+  {ignores: ['dist', 'dist-ssr']},
   js.configs.recommended,
   eslintConfigPrettier,
   {

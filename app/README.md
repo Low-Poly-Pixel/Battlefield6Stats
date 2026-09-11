@@ -41,14 +41,14 @@ This starts the Vite dev server and prints a local URL to open in your browser.
 
 ### Other scripts
 
-| Command                 | Purpose                               |
-| ----------------------- | ------------------------------------- |
-| `bun run dev`           | Start the dev server with hot reload  |
-| `bun run build`         | Type-check and build for production   |
-| `bun run preview`       | Preview the production build locally  |
-| `bun run lint`          | Run ESLint                            |
-| `bun run format`        | Format files with Prettier            |
-| `bun run format:check`  | Check formatting without writing      |
+| Command                | Purpose                              |
+| ---------------------- | ------------------------------------ |
+| `bun run dev`          | Start the dev server with hot reload |
+| `bun run build`        | Type-check and build for production  |
+| `bun run preview`      | Preview the production build locally |
+| `bun run lint`         | Run ESLint                           |
+| `bun run format`       | Format files with Prettier           |
+| `bun run format:check` | Check formatting without writing     |
 
 ## Data
 
