@@ -1,32 +1,61 @@
-# React + TypeScript + Vite
+# Battlefield 6 Stats
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Weapon and ballistics stats reference for Battlefield 6.
 
-Currently, two official plugins are available:
+## Repo layout
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
-
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the Oxlint configuration
-
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
-
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", {"allowConstantExport": true}]
-  }
-}
+```
+.
+├── app/    # React + TypeScript + Vite front end (this folder)
+└── data/   # Source weapon/attachment/ballistics data (JSON)
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+## Prerequisites
+
+This project uses [Bun](https://bun.sh) — not npm or yarn — as the package
+manager and script runner. The dependency lockfile (`bun.lock`) is
+Bun-specific, so installs must go through Bun to stay reproducible.
+
+Install it if you don't have it:
+
+```
+curl -fsSL https://bun.sh/install | bash
+```
+
+(See [bun.sh](https://bun.sh) for Windows/other install methods.) Verify with:
+
+```
+bun --version
+```
+
+## Running the app
+
+From this folder (`app/`):
+
+```
+bun install
+bun run dev
+```
+
+This starts the Vite dev server and prints a local URL to open in your browser.
+
+### Other scripts
+
+| Command                 | Purpose                               |
+| ----------------------- | ------------------------------------- |
+| `bun run dev`           | Start the dev server with hot reload  |
+| `bun run build`         | Type-check and build for production   |
+| `bun run preview`       | Preview the production build locally  |
+| `bun run lint`          | Run ESLint                            |
+| `bun run format`        | Format files with Prettier            |
+| `bun run format:check`  | Check formatting without writing      |
+
+## Data
+
+`../data/` holds the raw weapon, attachment, ammo, and ballistics stats
+(JSON) that back the app's numbers.
+
+## Contributing
+
+See [`CONTRIBUTING.md`](./CONTRIBUTING.md) for coding standards and project
+structure conventions.
