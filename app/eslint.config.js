@@ -2,11 +2,13 @@ import js from '@eslint/js';
 import {defineConfig} from 'eslint/config';
 import eslintConfigPrettier from 'eslint-config-prettier';
 import jsxA11y from 'eslint-plugin-jsx-a11y';
+import preferArrowFunctions from 'eslint-plugin-prefer-arrow-functions';
 import eslintPluginPrettier from 'eslint-plugin-prettier';
 import react from 'eslint-plugin-react';
 import reactHooks from 'eslint-plugin-react-hooks';
 import reactRefresh from 'eslint-plugin-react-refresh';
 import simpleImportSort from 'eslint-plugin-simple-import-sort';
+import storybook from 'eslint-plugin-storybook';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
 
@@ -21,6 +23,7 @@ export default defineConfig(
     plugins: {
       prettier: eslintPluginPrettier,
       'simple-import-sort': simpleImportSort,
+      'prefer-arrow-functions': preferArrowFunctions,
     },
     rules: {
       'prettier/prettier': 'error',
@@ -32,6 +35,13 @@ export default defineConfig(
       'prefer-const': 'error',
       'eol-last': 'error',
       'prefer-arrow-callback': 'error',
+      // Arrow functions everywhere; the rule itself skips cases where converting
+      // would change behavior (uses `this`/`arguments`, generators, hoisting-
+      // dependent recursion) — those are the "good reason" exceptions.
+      'prefer-arrow-functions/prefer-arrow-functions': [
+        'error',
+        {returnStyle: 'unchanged'},
+      ],
       'no-trailing-spaces': 'error',
       quotes: ['warn', 'single', {avoidEscape: true}],
       'no-else-return': ['error', {allowElseIf: false}],
@@ -100,4 +110,5 @@ export default defineConfig(
       react: {version: '19.2'},
     },
   },
+  storybook.configs['flat/recommended'],
 );
