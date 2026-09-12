@@ -1,0 +1,21 @@
+.root {
+  width: 100%;
+}
+
+.dataArea {
+  animation: revealLine 800ms ease;
+}
+
+.axisLabel {
+  fill: var(--mantine-color-white);
+}
+
+@keyframes revealLine {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}

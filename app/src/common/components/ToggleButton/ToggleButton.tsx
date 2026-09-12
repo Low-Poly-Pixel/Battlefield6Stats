@@ -11,6 +11,7 @@ interface ToggleButtonProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement>
   defaultPressed?: boolean;
   onPressedChange?: (pressed: boolean) => void;
 }
+
 export const ToggleButton = ({
   children,
   icon,
