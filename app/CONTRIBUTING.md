@@ -43,9 +43,12 @@ src/
 - A component/hook/util used by exactly one feature lives inside that
   feature's folder. Move it to `common/` or `constants/` only once a second
   feature needs it.
-- `index.ts` barrel files are fine for cleaner imports, but keep them
-  feature-scoped — don't re-export everything from one app-wide barrel, and
-  avoid wildcard (`import * as X`) imports (this part _is_ lint-enforced).
+- No `index.ts` barrel files, per component or otherwise — import directly
+  from the file (`from '.../Button/Button.tsx'`, not `from '.../Button'`).
+  A barrel only pays for itself once a component's internals actually
+  split into multiple files; none of them have, so it'd be a file that
+  exists for a problem that doesn't. Avoid wildcard (`import * as X`)
+  imports regardless (this part _is_ lint-enforced).
 
 ### Types vs. interfaces
 
@@ -119,6 +122,13 @@ are the documentation, not prose written about the code.
   in `.storybook/preview.tsx`) turns that into a full docs page for free —
   title, the args table, and a live Canvas of the default story that
   anyone can already plug custom values into, with zero extra files.
+- **Use generic values in stories, not real BF6 flavor text.** Args like
+  labels, titles, and content should describe what the story demonstrates
+  (`'Button'`, `'Toggle'`, `'Increase'`, `'Custom Range'`, `'Title'`,
+  `'Metric A'`) — not real weapon/skin/item names or narrative copy lifted
+  from the game or a reference site, even when that reference was used to
+  derive the component's visual styling. Flavor text belongs in the actual
+  app once real data is wired up, not in a component's stories.
 - **No `.mdx` file.** Design rationale, do's/don'ts, and WCAG notes go in
   the PR description or a commit message if they need to exist in writing
   at all — not in a permanent prose file that has to be kept in sync with

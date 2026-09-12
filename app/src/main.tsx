@@ -4,6 +4,7 @@ import '@fontsource/barlow-condensed/600.css';
 import '@fontsource/barlow-condensed/700.css';
 import '@fontsource/barlow-condensed/800.css';
 import '@mantine/core/styles.css';
+import '@mantine/charts/styles.css';
 import './index.css';
 
 import {MantineProvider} from '@mantine/core';

@@ -4,10 +4,12 @@ import '@fontsource/barlow-condensed/600.css';
 import '@fontsource/barlow-condensed/700.css';
 import '@fontsource/barlow-condensed/800.css';
 import '@mantine/core/styles.css';
+import '@mantine/charts/styles.css';
 import '../src/index.css';
 
 import {MantineProvider} from '@mantine/core';
 import type {Preview} from '@storybook/react-vite';
+import {themes} from 'storybook/theming';
 
 import {mantineCssVariableResolver} from '../src/cssVariablesResolver.ts';
 import {mantineTheme} from '../src/theme.ts';
@@ -34,6 +36,9 @@ const preview: Preview = {
     },
     a11y: {
       test: 'todo',
+    },
+    docs: {
+      theme: themes.dark,
     },
   },
   tags: ['autodocs'],
