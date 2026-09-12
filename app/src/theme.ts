@@ -1,62 +1,129 @@
-import {createTheme} from '@mantine/core';
+import type {MantineThemeOverride} from '@mantine/core';
+import {Card, colorsTuple, Container, createTheme, Paper, rem, Select} from '@mantine/core';
 
 const sans = "'Barlow', system-ui, 'Segoe UI', Roboto, sans-serif";
 const heading = "'Barlow Condensed', system-ui, 'Segoe UI', Roboto, sans-serif";
 
-declare module '@mantine/core' {
-  interface MantineThemeOther {
-    colorBg: string;
-    colorSurface: string;
-    colorSurfaceRaised: string;
-    colorBorder: string;
-    colorBorderStrong: string;
-    colorText: string;
-    colorTextMuted: string;
-    colorTextHeading: string;
-    colorInteractiveHighEmphasisBg: string;
-    colorInteractiveHighEmphasisText: string;
-    colorInteractiveLowEmphasisBorder: string;
-    colorInteractiveLowEmphasisText: string;
-    colorSurfaceInteractiveRest: string;
-    colorSurfaceInteractiveHover: string;
-    colorFocusRing: string;
-    colorStatUp: string;
-    colorStatDown: string;
-    colorStatNeutral: string;
-    colorStatTrack: string;
-    colorStatBaselineMarker: string;
-  }
-}
+const zinc = colorsTuple([
+  '#fafafa',
+  '#f4f4f5',
+  '#e4e4e7',
+  '#d4d4d8',
+  '#a1a1aa',
+  '#52525b',
+  '#3f3f46',
+  '#27272a',
+  '#18181b',
+  '#09090b',
+]);
 
-export const theme = createTheme({
+// Accent ramp built from #ff3c00 — the orange/red used on the official
+// Battlefield 6 site's promo banner and CTA buttons (ea.com/games/battlefield/
+// battlefield-6/buy) — via @mantine/colors-generator. Index 6 is the exact
+// sampled hex.
+const accentRed = colorsTuple([
+  '#ffede4',
+  '#ffdacd',
+  '#ffb39b',
+  '#ff8964',
+  '#fe6637',
+  '#fe4f19',
+  '#ff3c00',
+  '#e43400',
+  '#cb2c00',
+  '#b22100',
+]);
+
+const CONTAINER_SIZES: Record<string, string> = {
+  xxs: rem('200px'),
+  xs: rem('300px'),
+  sm: rem('400px'),
+  md: rem('500px'),
+  lg: rem('600px'),
+  xl: rem('1400px'),
+  xxl: rem('1600px'),
+};
+
+export const mantineTheme: MantineThemeOverride = createTheme({
+  /** Put your mantine theme override here */
   fontFamily: sans,
   fontFamilyMonospace: 'ui-monospace, Consolas, monospace',
   headings: {
     fontFamily: heading,
     fontWeight: '700',
   },
+  colors: {
+    dark: zinc,
+    red: accentRed,
+  },
+  primaryShade: 6,
+  fontSizes: {
+    xs: rem('12px'),
+    sm: rem('14px'),
+    md: rem('16px'),
+    lg: rem('18px'),
+    xl: rem('20px'),
+    '2xl': rem('24px'),
+    '3xl': rem('30px'),
+    '4xl': rem('36px'),
+    '5xl': rem('48px'),
+  },
+  spacing: {
+    '3xs': rem('4px'),
+    '2xs': rem('8px'),
+    xs: rem('10px'),
+    sm: rem('12px'),
+    md: rem('16px'),
+    lg: rem('20px'),
+    xl: rem('24px'),
+    '2xl': rem('28px'),
+    '3xl': rem('32px'),
+  },
+  primaryColor: 'red',
+  components: {
+    Container: Container.extend({
+      vars: (_, {size, fluid}) => {
+        let containerSize: string;
+
+        if (fluid) {
+          containerSize = '100%';
+        } else if (size !== undefined && size in CONTAINER_SIZES) {
+          containerSize = CONTAINER_SIZES[size];
+        } else {
+          containerSize = rem(size);
+        }
+
+        return {
+          root: {
+            '--container-size': containerSize,
+          },
+        };
+      },
+    }),
+    Paper: Paper.extend({
+      defaultProps: {
+        p: 'md',
+        shadow: 'xl',
+        radius: 'md',
+        withBorder: true,
+      },
+    }),
+
+    Card: Card.extend({
+      defaultProps: {
+        p: 'xl',
+        shadow: 'xl',
+        radius: 'var(--mantine-radius-default)',
+        withBorder: true,
+      },
+    }),
+    Select: Select.extend({
+      defaultProps: {
+        checkIconPosition: 'right',
+      },
+    }),
+  },
   other: {
-    colorBg: '#0a0a0d',
-    colorSurface: '#16171d',
-    colorSurfaceRaised: '#1e2028',
-    colorBorder: 'rgb(255 255 255 / 14%)',
-    colorBorderStrong: 'rgb(255 255 255 / 32%)',
-    colorText: '#c7c9d1',
-    colorTextMuted: '#8b8d97',
-    colorTextHeading: '#f4f5f7',
-    // Sampled directly from the BF6 reference screenshot (CARBINE's selected-tab fill).
-    colorInteractiveHighEmphasisBg: '#c2d1da',
-    colorInteractiveHighEmphasisText: '#0a0a0d',
-    colorInteractiveLowEmphasisBorder: 'rgb(244 245 247 / 45%)',
-    colorInteractiveLowEmphasisText: '#f4f5f7',
-    // Sampled from EQUIP/FIRING RANGE (rest) and CUSTOMIZE (hover, caught mid-hover in the reference).
-    colorSurfaceInteractiveRest: '#131618',
-    colorSurfaceInteractiveHover: '#292e31',
-    colorFocusRing: '#f4f5f7',
-    colorStatUp: '#34d399',
-    colorStatDown: '#f87171',
-    colorStatNeutral: '#8b8d97',
-    colorStatTrack: 'rgb(255 255 255 / 12%)',
-    colorStatBaselineMarker: '#f4f5f7',
+    style: 'mantine',
   },
 });

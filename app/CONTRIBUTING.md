@@ -56,6 +56,15 @@ src/
 ESLint can't tell "this type is props" from "this type is something else",
 so this one's on code review.
 
+### Prop ordering
+
+Within a `Props` interface (and its destructured parameters), required
+props come first, optional (`?`) ones last. TypeScript doesn't enforce
+this for object types — unlike function parameters, props are accessed
+by name, not position — so it's a readability convention, not a
+type-safety one: it puts what a consumer _must_ supply before what they
+can opt into.
+
 ### Component structure and ordering
 
 Inside a component, keep this order:
@@ -85,31 +94,35 @@ _why_ isn't obvious from the code.
 ### Documenting shared/styled components
 
 Every component under `src/common/components/` (the shared design-system
-layer, built on Mantine) ships as three co-located files:
+layer, built on Mantine) ships as two co-located files — no hand-written
+`.mdx`:
 
 ```
 Button/
 ├── Button.tsx           # the component
-├── Button.stories.tsx   # CSF3 stories — also its usage examples
-└── Button.mdx           # design rationale + accessibility notes
+└── Button.stories.tsx   # CSF3 stories — also its usage examples
 ```
 
-- **Props reference is JSDoc, not a hand-written table.** Add a doc comment
-  to the component function and to each prop in its `Props` interface.
-  Storybook's autodocs reads these straight from the TypeScript types into
-  the generated ArgTypes/Controls tables, so the reference can't drift from
-  the code the way a manually maintained table can. This is a deliberate
-  exception to the "no comments unless the why isn't obvious" rule above —
-  it applies only to this shared component layer, where the comment _is_
-  the documentation artifact, not narration of the code.
+These components are simple enough to be self-describing; code and types
+are the documentation, not prose written about the code.
+
+- **No mandatory per-prop JSDoc.** The "no comments unless the why isn't
+  obvious" rule applies here too — a well-named prop doesn't need a doc
+  comment restating its type. Storybook's autodocs still generates the
+  ArgTypes/Controls table straight from the TypeScript types (names,
+  types, required/optional) with no manual upkeep; it just won't show a
+  description column. Add a one-line comment only when a prop's behavior
+  genuinely isn't obvious from its name and type.
 - **Stories are the usage examples.** Every meaningful way to use the
   component (variants, states, edge cases) gets its own named story rather
-  than a separate "usage" write-up — the autodocs page renders each story
-  live in its Canvas.
-- **The `.mdx` file is for what JSDoc can't carry**: why the component
-  looks/behaves the way it does (tie back to the source reference, e.g. a
-  screenshot or an agreed decision), explicit do's/don'ts, and which WCAG
-  behaviors are guaranteed (keyboard nav, ARIA roles, focus handling).
+  than a separate "usage" write-up. `tags: ['autodocs']` (set project-wide
+  in `.storybook/preview.tsx`) turns that into a full docs page for free —
+  title, the args table, and a live Canvas of the default story that
+  anyone can already plug custom values into, with zero extra files.
+- **No `.mdx` file.** Design rationale, do's/don'ts, and WCAG notes go in
+  the PR description or a commit message if they need to exist in writing
+  at all — not in a permanent prose file that has to be kept in sync with
+  the component by hand.
 - Run `bun run storybook` to review docs pages and check the Accessibility
   panel (`@storybook/addon-a11y`) for violations before considering a
   component done — this project treats WCAG 2.1 AA as a hard constraint,

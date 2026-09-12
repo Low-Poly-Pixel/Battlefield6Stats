@@ -12,6 +12,24 @@ import storybook from 'eslint-plugin-storybook';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
 
+const noWildcardImports = {
+  selector: 'ImportNamespaceSpecifier',
+  message: 'Avoid wildcard (import * as X) imports — prefer named imports for clarity and tree-shaking.',
+};
+
+const noFalsyTernaryConsequent = {
+  selector:
+    'ConditionalExpression > Identifier.consequent[name="undefined"], ConditionalExpression > Literal.consequent[value=null], ConditionalExpression > Literal.consequent[value=false]',
+  message:
+    'Invert this ternary — put the meaningful value in the truthy branch, not undefined/null/false. `cond ? value : undefined` reads clearer than `cond ? undefined : value` (flip the condition too if needed).',
+};
+
+const noHardcodedHexColors = {
+  selector: 'Literal[value=/^#([0-9a-fA-F]{3}){1,2}$/]',
+  message:
+    'Reference a theme.other.<token> color instead of a hardcoded hex value — colors live in theme.ts so CSS stays maintainable. Add the token there if it does not exist yet.',
+};
+
 // Base rules mirror Google's official gts ESLint config
 // (https://github.com/google/gts), the reference implementation of
 // https://google.github.io/styleguide/tsguide.html
@@ -38,31 +56,19 @@ export default defineConfig(
       // Arrow functions everywhere; the rule itself skips cases where converting
       // would change behavior (uses `this`/`arguments`, generators, hoisting-
       // dependent recursion) — those are the "good reason" exceptions.
-      'prefer-arrow-functions/prefer-arrow-functions': [
-        'error',
-        {returnStyle: 'unchanged'},
-      ],
+      'prefer-arrow-functions/prefer-arrow-functions': ['error', {returnStyle: 'unchanged'}],
       'no-trailing-spaces': 'error',
       quotes: ['warn', 'single', {avoidEscape: true}],
       'no-else-return': ['error', {allowElseIf: false}],
+      'no-nested-ternary': 'error',
       curly: ['error', 'multi-line'],
       'padding-line-between-statements': [
         'error',
         {blankLine: 'always', prev: '*', next: 'return'},
         {blankLine: 'always', prev: '*', next: 'if'},
       ],
-      'no-restricted-syntax': [
-        'error',
-        {
-          selector: 'ImportNamespaceSpecifier',
-          message:
-            'Avoid wildcard (import * as X) imports — prefer named imports for clarity and tree-shaking.',
-        },
-      ],
-      'max-lines-per-function': [
-        'warn',
-        {max: 150, skipBlankLines: true, skipComments: true, IIFEs: true},
-      ],
+      'no-restricted-syntax': ['error', noWildcardImports, noFalsyTernaryConsequent],
+      'max-lines-per-function': ['warn', {max: 150, skipBlankLines: true, skipComments: true, IIFEs: true}],
     },
   },
   {
@@ -83,12 +89,18 @@ export default defineConfig(
     },
     rules: {
       ...reactHooks.configs.recommended.rules,
-      'react-refresh/only-export-components': [
-        'warn',
-        {allowConstantExport: true},
-      ],
+      'react-refresh/only-export-components': ['warn', {allowConstantExport: true}],
       '@typescript-eslint/array-type': ['error', {default: 'array-simple'}],
       '@typescript-eslint/no-non-null-assertion': 'off',
+    },
+  },
+  {
+    // Colors belong in theme.ts, referenced via theme.other.<token> —
+    // hardcoding hex values elsewhere makes the CSS harder to keep consistent.
+    files: ['**/*.{ts,tsx}'],
+    ignores: ['**/theme.ts'],
+    rules: {
+      'no-restricted-syntax': ['error', noWildcardImports, noHardcodedHexColors, noFalsyTernaryConsequent],
     },
   },
   {

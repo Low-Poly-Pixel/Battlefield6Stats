@@ -11,12 +11,13 @@ import {StrictMode} from 'react';
 import {createRoot, hydrateRoot} from 'react-dom/client';
 
 import App from './App.tsx';
-import {theme} from './theme.ts';
+import {mantineCssVariableResolver} from './cssVariablesResolver.ts';
+import {mantineTheme} from './theme.ts';
 
 const container = document.getElementById('root')!;
 const app = (
   <StrictMode>
-    <MantineProvider theme={theme} forceColorScheme="dark">
+    <MantineProvider theme={mantineTheme} cssVariablesResolver={mantineCssVariableResolver} forceColorScheme="dark">
       <App />
     </MantineProvider>
   </StrictMode>

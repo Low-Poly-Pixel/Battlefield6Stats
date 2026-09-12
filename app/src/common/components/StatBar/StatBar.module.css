@@ -1,0 +1,73 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: var(--mantine-spacing-3xs);
+  width: 100%;
+}
+
+.labelRow {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--mantine-spacing-sm);
+}
+
+.label {
+  font-size: var(--mantine-font-size-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--mantine-color-dimmed);
+}
+
+.value {
+  font-size: var(--mantine-font-size-sm);
+  font-weight: 700;
+  color: var(--mantine-color-text);
+}
+
+.value[data-direction='up'] {
+  color: var(--mantine-color-green-6);
+}
+
+.value[data-direction='down'] {
+  color: var(--mantine-color-red-6);
+}
+
+.track {
+  position: relative;
+  width: 100%;
+  background-color: var(--mantine-color-dark-6);
+}
+
+.section,
+.accentSection {
+  transform-origin: left;
+}
+
+.section {
+  animation: fillIn 600ms ease;
+}
+
+.accentSection {
+  animation: fillIn 600ms ease 600ms backwards;
+}
+
+@keyframes fillIn {
+  from {
+    transform: scaleX(0);
+  }
+
+  to {
+    transform: scaleX(1);
+  }
+}
+
+.marker {
+  position: absolute;
+  top: 50%;
+  width: 2px;
+  height: calc(var(--progress-size) + 6px);
+  background-color: var(--mantine-color-white);
+  transform: translate(-50%, -50%);
+}
