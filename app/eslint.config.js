@@ -30,6 +30,13 @@ const noHardcodedHexColors = {
     'Reference a theme.other.<token> color instead of a hardcoded hex value — colors live in theme.ts so CSS stays maintainable. Add the token there if it does not exist yet.',
 };
 
+const noRelativeParentImports = {
+  selector:
+    'ImportDeclaration[source.value=/^\\.\\./], ExportNamedDeclaration[source.value=/^\\.\\./], ExportAllDeclaration[source.value=/^\\.\\./]',
+  message:
+    'Use an absolute "@/..." import instead of a relative parent import ("../") — same-directory ("./") imports are still fine.',
+};
+
 // Base rules mirror Google's official gts ESLint config
 // (https://github.com/google/gts), the reference implementation of
 // https://google.github.io/styleguide/tsguide.html
@@ -67,7 +74,7 @@ export default defineConfig(
         {blankLine: 'always', prev: '*', next: 'return'},
         {blankLine: 'always', prev: '*', next: 'if'},
       ],
-      'no-restricted-syntax': ['error', noWildcardImports, noFalsyTernaryConsequent],
+      'no-restricted-syntax': ['error', noWildcardImports, noFalsyTernaryConsequent, noRelativeParentImports],
       'max-lines-per-function': ['warn', {max: 150, skipBlankLines: true, skipComments: true, IIFEs: true}],
     },
   },
@@ -100,7 +107,13 @@ export default defineConfig(
     files: ['**/*.{ts,tsx}'],
     ignores: ['**/theme.ts'],
     rules: {
-      'no-restricted-syntax': ['error', noWildcardImports, noHardcodedHexColors, noFalsyTernaryConsequent],
+      'no-restricted-syntax': [
+        'error',
+        noWildcardImports,
+        noHardcodedHexColors,
+        noFalsyTernaryConsequent,
+        noRelativeParentImports,
+      ],
     },
   },
   {
