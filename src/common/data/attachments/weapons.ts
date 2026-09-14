@@ -1,8 +1,16 @@
-import type {WeaponClass} from '@/common/components/HardwareCard/HardwareCard.tsx';
 import {type Weapon, type WeaponClassName, weapons} from '@/data/weapons.ts';
 
 export type {Weapon};
 export {weapons};
+
+export type WeaponClass = 'assault' | 'engineer' | 'support' | 'recon';
+
+export const CLASS_ICON_SRC: Record<WeaponClass, string> = {
+  assault: `${import.meta.env.BASE_URL}img/classes/assault.svg`,
+  engineer: `${import.meta.env.BASE_URL}img/classes/engineer.svg`,
+  support: `${import.meta.env.BASE_URL}img/classes/support.svg`,
+  recon: `${import.meta.env.BASE_URL}img/classes/recon.svg`,
+};
 
 const classWeaponByClass: Partial<Record<WeaponClassName, WeaponClass>> = {
   assaultRifle: 'assault',

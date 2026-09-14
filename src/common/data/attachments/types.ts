@@ -69,11 +69,13 @@ export interface Stat {
 export interface WeaponStatsViewModel {
   fireRate: Stat;
   damage: Stat;
-  headshotDamage: Stat;
+  headshotMultiplier: Stat;
   velocity: Stat;
   adsSpreadGrowth: Stat;
   adsTime: Stat;
+  adsMoveSpeed: Stat;
   sprintRecoveryTime: Stat;
+  sprintSpeed: Stat;
   deployTime: Stat;
   reloadTime: Stat;
   emptyReloadTime: Stat;
@@ -83,4 +85,6 @@ export interface WeaponStatsViewModel {
   worldSpot: Stat;
   minimapSpot: Stat;
   healthRegenDelay: Stat;
+  collateralMultiplier: Stat;
+  magazineSize: Stat;
 }
