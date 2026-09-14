@@ -3,11 +3,11 @@ import type {Meta, StoryObj} from '@storybook/react-vite';
 import {LineGraph} from './LineGraph.tsx';
 
 const data = [
-  {range: 0, damage: 35},
-  {range: 25, damage: 30},
-  {range: 50, damage: 25},
-  {range: 75, damage: 20},
-  {range: 100, damage: 20},
+  {range: 0, damage: 26.05},
+  {range: 21, damage: 26.05},
+  {range: 21, damage: 20.67},
+  {range: 75, damage: 20.67},
+  {range: 75, damage: 17.13},
 ];
 
 const meta = {
@@ -27,46 +27,49 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {};
 
-export const PistolMode: Story = {
+// Revolvers like the M44 hit well above the old fixed pistol-mode ceiling.
+export const HighDamageSidearm: Story = {
   args: {
     label: 'Damage Falloff',
-    mode: 'pistol',
     data: [
-      {range: 0, damage: 50},
-      {range: 25, damage: 20},
-      {range: 50, damage: 20},
-      {range: 75, damage: 10},
-      {range: 100, damage: 10},
+      {range: 0, damage: 66.7},
+      {range: 9, damage: 66.7},
+      {range: 9, damage: 59.9},
+      {range: 21, damage: 59.9},
+      {range: 21, damage: 33.4},
+      {range: 75, damage: 33.4},
+      {range: 75, damage: 25},
     ],
   },
 };
 
-export const DMRMode: Story = {
+// Shotguns record per-pellet damage, an order of magnitude below rifles.
+export const PerPelletShotgun: Story = {
   args: {
     label: 'Damage Falloff',
-    mode: 'dmr',
     data: [
-      {range: 0, damage: 65},
-      {range: 25, damage: 55},
-      {range: 50, damage: 45},
-      {range: 75, damage: 40},
-      {range: 100, damage: 40},
+      {range: 0, damage: 8.4},
+      {range: 8, damage: 8.4},
+      {range: 9, damage: 7.2},
+      {range: 15, damage: 7.2},
+      {range: 16, damage: 5.6},
+      {range: 30, damage: 5.6},
+      {range: 31, damage: 3.8},
     ],
   },
 };
 
-export const SniperMode: Story = {
+// Bolt-action snipers have a real "sweet spot" mechanic -- damage rises with
+// range before falling off -- and some have no recorded damage below their
+// first breakpoint (the line simply starts there rather than at range 0).
+export const SniperSweetSpot: Story = {
   args: {
     label: 'Damage Falloff',
-    mode: 'sniper',
     data: [
-      {range: 0, damage: 80},
-      {range: 25, damage: 80},
-      {range: 50, damage: 100},
-      {range: 75, damage: 120},
-      {range: 100, damage: 150},
-      {range: 150, damage: 150},
-      {range: 200, damage: 100},
+      {range: 54, damage: 80},
+      {range: 75, damage: 100},
+      {range: 100, damage: 100},
+      {range: 133, damage: 62},
     ],
   },
 };

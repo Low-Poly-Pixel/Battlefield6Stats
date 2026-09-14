@@ -332,33 +332,33 @@ export const baseHeadshotMultByWeapon: Record<string, number> = {
   grtcps: 1.34,
 };
 
-export const collateralMultOverrideByWeapon: Record<string, Record<string, number>> = {
+export const collateralMultOverrideByWeapon: Partial<Record<string, Record<string, number>>> = {
   pw7a2: {
     standard: 0.67,
     penetration: 0.83,
     frangible: 0.57,
-    hollow_pt: 0.57,
+    hollowPt: 0.57,
     synthetic: 0.57,
-    subsonic_pen: 0.67,
+    subsonicPen: 0.67,
   },
   usg90: {
     standard: 0.67,
     penetration: 0.83,
     frangible: 0.57,
-    hollow_pt: 0.57,
+    hollowPt: 0.57,
     subsonic: 0.57,
-    subsonic_hp: 0.57,
+    subsonicHp: 0.57,
   },
   es57: {
     standard: 0.67,
   },
   m45a1: {
     frangible: 0.57,
-    hollow_pt: 0.57,
+    hollowPt: 0.57,
   },
   m121a2: {
     frangible: 0.75,
-    hollow_pt: 0.75,
+    hollowPt: 0.75,
   },
 };
 
@@ -479,4 +479,23 @@ export const drawTimeTables: DrawTimeTables = {
       133.334, 116.667, 100.001, 83.334, 66.667,
     ],
   },
+};
+
+export const subsonicVelocityMpsByWeapon: Record<string, number> = {
+  m417a2: 273,
+  sg553r: 247,
+  sor300sc: 270,
+  p18: 280,
+  es57: 408,
+  ggh22: 320,
+  sgx: 241,
+  pw5a3: 326,
+  pw7a2: 341,
+  umg40: 239,
+  usg90: 265,
+  kv9: 231,
+  scw10: 254,
+  sl9: 248,
+  cz3a1: 215,
+  pp19: 227,
 };

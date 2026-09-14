@@ -1,7 +1,3 @@
-.root {
-  scrollbar-gutter: stable;
-}
-
 .root::-webkit-scrollbar {
   width: 4px;
 }

@@ -1,3 +1,4 @@
+import {useClickOutside} from '@mantine/hooks';
 import type {ReactNode} from 'react';
 import {useState} from 'react';
 
@@ -39,6 +40,7 @@ export const Dropdown = ({
   const currentContent: ReactNode = selected ? (
     <OptionLabel pts={selected.pts} name={selected.name} />
   ) : null;
+  const rootRef = useClickOutside<HTMLDivElement>(onToggle, undefined, undefined, isOpen);
 
   const [prevValue, setPrevValue] = useState(value);
   const [flipped, setFlipped] = useState(false);
@@ -55,7 +57,7 @@ export const Dropdown = ({
   }
 
   return (
-    <div className={classes.root}>
+    <div ref={rootRef} className={classes.root}>
       <span className={classes.label}>{label}</span>
       <button
         type="button"

@@ -1,18 +1,26 @@
 import {useState} from 'react';
 
 import classes from './App.module.css';
+import {AccuracyStats} from './common/components/AccuracyStats/AccuracyStats.tsx';
+import {AmmoModifiersStats} from './common/components/AmmoModifiersStats/AmmoModifiersStats.tsx';
 import {Button} from './common/components/Button/Button.tsx';
+import {CoreGunStats} from './common/components/CoreGunStats/CoreGunStats.tsx';
+import {DamageRangeChart} from './common/components/DamageRangeChart/DamageRangeChart.tsx';
 import {Dropdown} from './common/components/Dropdown/Dropdown.tsx';
 import {HardwareCard} from './common/components/HardwareCard/HardwareCard.tsx';
 import {Header} from './common/components/Header/Header.tsx';
+import {HipfireStats} from './common/components/HipfireStats/HipfireStats.tsx';
+import {MobilityStats} from './common/components/MobilityStats/MobilityStats.tsx';
+import {ReloadStats} from './common/components/ReloadStats/ReloadStats.tsx';
 import {ResetLabel} from './common/components/ResetLabel/ResetLabel.tsx';
 import {Sidebar} from './common/components/Sidebar/Sidebar.tsx';
+import {SignatureWeaponToggle} from './common/components/SignatureWeaponToggle/SignatureWeaponToggle.tsx';
+import {StealthStats} from './common/components/StealthStats/StealthStats.tsx';
 import {Tabs} from './common/components/Tabs/Tabs.tsx';
 import {WeaponList} from './common/components/WeaponList/WeaponList.tsx';
-import {WeaponStats} from './common/components/WeaponStats/WeaponStats.tsx';
 import {getLoadoutViewModel, updateSelection} from './common/data/attachments/loadout.ts';
 import {getDefaultSelections} from './common/data/attachments/selections.ts';
-import {getWeaponStatsViewModel} from './common/data/attachments/stats.ts';
+import {getWeaponStatsViewModel} from './common/data/attachments/stats/index.ts';
 import type {AttachmentKey, AttachmentSelections} from './common/data/attachments/types.ts';
 import {
   getWeaponImageSrc,
@@ -33,6 +41,7 @@ const App = () => {
   const [selections, setSelections] = useState<AttachmentSelections | null>(null);
   const [openCategory, setOpenCategory] = useState<AttachmentKey | null>(null);
   const [resetTrigger, setResetTrigger] = useState(0);
+  const [signatureWeapon, setSignatureWeapon] = useState(false);
   const tabWeapons = getWeaponsForTab(selectedTab);
   const selectedWeapon = weapons.find(weapon => weapon.id === selectedWeaponId);
   const loadout = getLoadoutViewModel(selectedWeaponId, selections);
@@ -73,7 +82,10 @@ const App = () => {
 
   return (
     <div className={classes.root}>
-      <Header title="Battlefield 6 Stats" subtitle="Weapon stats" />
+      <Header
+        title="Battlefield 6 Stats"
+        subtitle="Giving you a clue what your weapons actually do!"
+      />
       <div className={classes.body}>
         <Sidebar label="Weapon categories">
           <Tabs
@@ -89,7 +101,7 @@ const App = () => {
           />
         </Sidebar>
         <main className={classes.main}>
-          {selectedWeapon && loadout && (
+          {selectedWeapon && loadout && selections && (
             <div className={classes.loadout}>
               <div className={classes.mainColumn}>
                 <div className={classes.weaponBox}>
@@ -102,6 +114,11 @@ const App = () => {
                     pointsBudget={loadout.budget}
                   />
                 </div>
+                <SignatureWeaponToggle
+                  weaponClass={selectedWeapon.class}
+                  checked={signatureWeapon}
+                  onChange={setSignatureWeapon}
+                />
                 <div className={classes.attachmentBox}>
                   <div className={classes.attachmentGrid}>
                     {loadout.attachments.map(category => (
@@ -130,8 +147,21 @@ const App = () => {
                   </Button>
                 </div>
               </div>
-              <div className={classes.velocityBox}>
-                <WeaponStats stats={stats} />
+              <div className={classes.statsSection}>
+                <div className={classes.statsRow}>
+                  <div className={classes.statsColumn}>
+                    <CoreGunStats key={`core-${selectedWeapon.id}`} stats={stats} />
+                    <MobilityStats key={`mobility-${selectedWeapon.id}`} stats={stats} />
+                    <HipfireStats key={`hipfire-${selectedWeapon.id}`} stats={stats} />
+                  </div>
+                  <div className={classes.statsColumn}>
+                    <AmmoModifiersStats key={`ammo-${selectedWeapon.id}`} stats={stats} />
+                    <ReloadStats key={`reload-${selectedWeapon.id}`} stats={stats} />
+                    <StealthStats key={`stealth-${selectedWeapon.id}`} stats={stats} />
+                    <AccuracyStats key={`accuracy-${selectedWeapon.id}`} stats={stats} />
+                  </div>
+                </div>
+                <DamageRangeChart weaponId={selectedWeapon.id} selections={selections} />
               </div>
             </div>
           )}

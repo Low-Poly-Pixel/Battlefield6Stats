@@ -4,44 +4,56 @@ import {Label} from 'recharts';
 
 import classes from './LineGraph.module.css';
 
-type GraphMode = 'default' | 'pistol' | 'dmr' | 'sniper';
+// Both axes are shown on a fixed scale rather than one sized to each
+// weapon's own data, so guns within the same category are directly
+// comparable to each other at a glance instead of each getting its own scale.
+// Range always divides into 10 even steps (so it scales with rangeMax: 10s
+// up to 100, 20s up to 200); damage's step stays fixed at 10 regardless of
+// max, so a 50-max chart gets fewer, not smaller, ticks than a 100-max one.
+const getRangeTicks = (rangeMax: number): number[] => {
+  const step = rangeMax / 10;
 
-type ModeConfig = {
-  damageMax: number;
-  rangeMax: number;
-  damageInterval: number;
-  rangeInterval: number;
+  return Array.from({length: 11}, (_, index) => index * step);
 };
 
-const MODE_CONFIG: Record<GraphMode, ModeConfig> = {
-  default: {damageMax: 40, rangeMax: 100, damageInterval: 5, rangeInterval: 10},
-  pistol: {damageMax: 60, rangeMax: 100, damageInterval: 5, rangeInterval: 10},
-  dmr: {damageMax: 80, rangeMax: 100, damageInterval: 10, rangeInterval: 10},
-  sniper: {damageMax: 160, rangeMax: 200, damageInterval: 20, rangeInterval: 25},
-};
-
-const getTicks = (max: number, interval: number): number[] =>
-  Array.from({length: Math.floor(max / interval) + 1}, (_, index) => index * interval);
+const getDamageTicks = (damageMax: number, damageStep: number): number[] =>
+  Array.from({length: damageMax / damageStep + 1}, (_, index) => index * damageStep);
 
 interface LineGraphProps {
   label: string;
   data: Array<{range: number; damage: number}>;
-  mode?: GraphMode;
   color?: MantineColor;
+  rangeMax?: number;
+  damageMax?: number;
+  damageStep?: number;
 }
 
-export const LineGraph = ({label, data, mode = 'default', color = 'red'}: LineGraphProps) => {
-  const config = MODE_CONFIG[mode];
-  const rangeTicks = getTicks(config.rangeMax, config.rangeInterval);
-  const damageTicks = getTicks(config.damageMax, config.damageInterval);
+export const LineGraph = ({
+  label,
+  data,
+  color = 'red',
+  rangeMax = 100,
+  damageMax = 100,
+  damageStep = 10,
+}: LineGraphProps) => {
+  const rangeTicks = getRangeTicks(rangeMax);
+  const damageTicks = getDamageTicks(damageMax, damageStep);
   const rangeGridValues = rangeTicks.filter(value => value !== 0);
   const damageReferenceValues = damageTicks.filter(value => value !== 0);
+  // The last logged breakpoint is where measurement stopped, not where
+  // damage hits 0 -- extend a flat segment out to the chart's edge so the
+  // line holds at that value instead of dropping off after the last point.
+  const lastPoint = data.at(-1);
+  const chartData =
+    lastPoint && lastPoint.range < rangeMax
+      ? [...data, {range: rangeMax, damage: lastPoint.damage}]
+      : data;
 
   return (
     <div className={classes.root} role="img" aria-label={label}>
       <AreaChart
         h={220}
-        data={data}
+        data={chartData}
         dataKey="range"
         series={[{name: 'damage', color}]}
         curveType="linear"
@@ -61,7 +73,7 @@ export const LineGraph = ({label, data, mode = 'default', color = 'red'}: LineGr
         xAxisLabel="Range (m)"
         xAxisProps={{
           type: 'number',
-          domain: [0, config.rangeMax],
+          domain: [0, rangeMax],
           ticks: rangeTicks,
           tickLine: false,
           interval: 0,
@@ -69,7 +81,7 @@ export const LineGraph = ({label, data, mode = 'default', color = 'red'}: LineGr
           axisLine: {stroke: 'var(--mantine-color-white)', strokeWidth: 2},
         }}
         yAxisProps={{
-          domain: [0, config.damageMax],
+          domain: [0, damageMax],
           ticks: damageTicks,
           tickLine: false,
           interval: 0,

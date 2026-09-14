@@ -1,16 +1,9 @@
 import type {ComponentPropsWithoutRef, KeyboardEvent} from 'react';
 import {useId} from 'react';
 
+import {CLASS_ICON_SRC, type WeaponClass} from '@/common/data/attachments/weapons.ts';
+
 import classes from './HardwareCard.module.css';
-
-export type WeaponClass = 'assault' | 'engineer' | 'support' | 'recon';
-
-const CLASS_ICON_SRC: Record<WeaponClass, string> = {
-  assault: `${import.meta.env.BASE_URL}img/classes/assault.svg`,
-  engineer: `${import.meta.env.BASE_URL}img/classes/engineer.svg`,
-  support: `${import.meta.env.BASE_URL}img/classes/support.svg`,
-  recon: `${import.meta.env.BASE_URL}img/classes/recon.svg`,
-};
 
 type InteractiveProps = Pick<
   ComponentPropsWithoutRef<'article'>,

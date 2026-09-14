@@ -18,14 +18,38 @@
 
 .loadout {
   display: flex;
+  flex-wrap: wrap;
   align-items: flex-start;
+  justify-content: center;
   gap: var(--mantine-spacing-md);
+  max-width: 1200px;
+  margin-inline: auto;
 }
 
 .mainColumn {
   display: flex;
   flex-direction: column;
   gap: var(--mantine-spacing-md);
+}
+
+.statsSection {
+  display: flex;
+  flex-direction: column;
+  gap: var(--mantine-spacing-md);
+  padding-bottom: var(--mantine-spacing-md);
+}
+
+.statsRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--mantine-spacing-md);
+}
+
+.statsColumn {
+  display: flex;
+  flex-direction: column;
+  gap: var(--mantine-spacing-md);
+  width: 20rem;
 }
 
 .weaponBox {
@@ -35,14 +59,6 @@
   max-height: 10rem;
   padding: var(--mantine-spacing-md);
   view-transition-name: weapon-card;
-}
-
-.velocityBox {
-  composes: root from './common/components/Panel/Panel.module.css';
-  width: 20rem;
-  max-width: 20rem;
-  padding: var(--mantine-spacing-md);
-  gap: var(--mantine-spacing-sm);
 }
 
 .attachmentBox {

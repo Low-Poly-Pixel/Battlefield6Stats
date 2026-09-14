@@ -10,10 +10,6 @@
   flex-shrink: 0;
 }
 
-.divider {
-  align-self: stretch;
-}
-
 .text {
   display: flex;
   flex-direction: column;
