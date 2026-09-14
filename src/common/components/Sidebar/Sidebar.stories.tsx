@@ -10,6 +10,7 @@ const meta = {
   },
   args: {
     label: 'Sidebar',
+    children: null,
   },
 } satisfies Meta<typeof Sidebar>;
 

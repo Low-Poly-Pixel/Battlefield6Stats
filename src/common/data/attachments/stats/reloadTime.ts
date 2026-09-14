@@ -28,7 +28,7 @@ export const getReloadTime = (weaponId: string, selections: AttachmentSelections
   const baseSeconds =
     selectedMag.tacRldOverrideMs !== undefined
       ? selectedMag.tacRldOverrideMs / 1000
-      : weapon.tacRld;
+      : (weapon.tacRld ?? NaN);
 
   const reloadTierMult = RELOAD_SPEED_MULTIPLIERS[selectedMag.reloadSpeedTier ?? 0];
   const ergoMult = optionStat(ERGO_MAP, selections.ergonomics, ergo => ergo.reloadSpeedMult) ?? 1;

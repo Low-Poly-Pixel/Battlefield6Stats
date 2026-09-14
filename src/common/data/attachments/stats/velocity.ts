@@ -1,4 +1,5 @@
 import {BARREL_MAP} from '@/common/data/attachments/catalogs.ts';
+import {getDefaultSelections} from '@/common/data/attachments/selections.ts';
 import type {AttachmentSelections} from '@/common/data/attachments/types.ts';
 import {subsonicVelocityMpsByWeapon} from '@/data/balanceTables.ts';
 import {weapons} from '@/data/weapons.ts';
@@ -9,9 +10,6 @@ const SUBSONIC_AMMO_IDS = new Set(['subsonic', 'subsonicHp', 'subsonicPen']);
 
 const getRawBulletVelocity = (weaponId: string): number =>
   weapons.find(item => item.id === weaponId)?.bulletVel ?? 0;
-
-export const getBaseMuzzleVelocity = (weaponId: string): number =>
-  Math.floor(getRawBulletVelocity(weaponId));
 
 // Subsonic ammo overrides the weapon's own velocity with a flat measured
 // value (see subsonicVelocityMpsByWeapon), but the barrel's velMult still
@@ -24,3 +22,6 @@ export const getMuzzleVelocity = (weaponId: string, selections: AttachmentSelect
 
   return Math.floor(baseVelocity * velMult);
 };
+
+export const getBaseMuzzleVelocity = (weaponId: string): number =>
+  getMuzzleVelocity(weaponId, getDefaultSelections(weaponId));
