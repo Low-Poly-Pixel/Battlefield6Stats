@@ -1,0 +1,48 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: var(--mantine-spacing-3xs);
+  width: 100%;
+}
+
+.labelRow {
+  composes: labelRow from '../StatBar/StatBar.module.css';
+}
+
+.root .labelRow {
+  align-items: center;
+}
+
+.label {
+  composes: label from '../StatBar/StatBar.module.css';
+}
+
+.valueGroup {
+  display: flex;
+  align-items: center;
+  gap: var(--mantine-spacing-2xs);
+}
+
+.icon {
+  composes: icon from '../../styles/actionable.module.css';
+  align-self: center;
+  width: 1rem;
+  height: 1rem;
+}
+
+.value {
+  composes: value from '../StatBar/StatBar.module.css';
+  display: inline-block;
+  text-align: right;
+  animation: statValueFade 200ms ease;
+}
+
+@keyframes statValueFade {
+  from {
+    opacity: 0.2;
+  }
+
+  to {
+    opacity: 1;
+  }
+}

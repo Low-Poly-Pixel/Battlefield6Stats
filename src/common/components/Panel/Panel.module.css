@@ -1,0 +1,30 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--mantine-color-dark-4);
+  border-radius: var(--mantine-radius-xs);
+  overflow: hidden;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--mantine-spacing-3xs);
+  padding: var(--mantine-spacing-md);
+  border-bottom: 1px solid var(--mantine-color-dark-4);
+}
+
+.subtitle {
+  composes: subtitle from '../../styles/sectionHeading.module.css';
+}
+
+.title {
+  composes: title from '../../styles/sectionHeading.module.css';
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--mantine-spacing-sm);
+  padding: var(--mantine-spacing-md);
+}

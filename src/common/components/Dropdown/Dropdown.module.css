@@ -1,0 +1,109 @@
+.root {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--mantine-spacing-3xs);
+}
+
+.label {
+  composes: subtitle from '../../styles/sectionHeading.module.css';
+}
+
+.trigger {
+  composes: root from '../../styles/actionable.module.css';
+  justify-content: flex-start;
+  width: 100%;
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: normal;
+}
+
+.root .trigger {
+  padding: var(--mantine-spacing-3xs) var(--mantine-spacing-xs);
+  font-size: var(--mantine-font-size-xs);
+}
+
+.trigger[data-empty='true'] {
+  color: var(--mantine-color-dimmed);
+}
+
+.triggerLabel {
+  display: block;
+  width: 100%;
+  height: 1.15rem;
+  overflow: hidden;
+}
+
+.triggerLabelTrack {
+  display: flex;
+  flex-direction: column;
+  transition: transform 200ms ease;
+}
+
+.triggerLabelTrack[data-flipped='true'] {
+  transform: translateY(-1.15rem);
+}
+
+.triggerLabelRow {
+  display: flex;
+  align-items: center;
+  gap: var(--mantine-spacing-2xs);
+  height: 1.15rem;
+  line-height: 1.15rem;
+  white-space: nowrap;
+}
+
+.panel {
+  composes: root from '../../styles/scrollbar.module.css';
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  max-height: 12rem;
+  overflow-y: auto;
+  background-color: var(--mantine-color-dark-9);
+  border: 1px solid var(--mantine-color-white);
+  border-top: none;
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  gap: var(--mantine-spacing-2xs);
+  text-align: left;
+  padding: var(--mantine-spacing-3xs) var(--mantine-spacing-xs);
+  border: none;
+  background-color: var(--mantine-color-dark-9);
+  color: var(--mantine-color-text);
+  font: inherit;
+  font-size: var(--mantine-font-size-xs);
+  cursor: pointer;
+}
+
+.pts {
+  flex-shrink: 0;
+  min-width: 2.75rem;
+  font-weight: 700;
+}
+
+.name {
+  font-weight: 400;
+}
+
+.option:hover:not(:disabled) {
+  background-color: var(--mantine-color-white);
+  color: var(--mantine-color-black);
+}
+
+.option[data-selected='true'] {
+  background-color: var(--mantine-color-white);
+  color: var(--mantine-color-black);
+}
+
+.option[data-unaffordable='true'] {
+  color: var(--mantine-color-red-6);
+  cursor: not-allowed;
+}

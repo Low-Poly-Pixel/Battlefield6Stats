@@ -1,0 +1,14 @@
+.root {
+  composes: root from '../../styles/scrollbar.module.css';
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  gap: var(--mantine-spacing-sm);
+  padding-top: var(--mantine-spacing-2xs);
+  padding-bottom: var(--mantine-spacing-2xs);
+  padding-left: var(--mantine-spacing-2xs);
+  padding-right: var(--mantine-spacing-2xs);
+  overflow-y: auto;
+  view-transition-name: weapon-list;
+}

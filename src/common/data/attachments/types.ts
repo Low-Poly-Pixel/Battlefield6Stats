@@ -1,4 +1,3 @@
-// TODO: review this file for code quality before considering it done
 import type {WeaponAmmoEntry} from '@/data/ammo.ts';
 import type {
   WeaponAttachments,
@@ -61,23 +60,27 @@ export interface LoadoutViewModel {
   budget: number;
 }
 
-export interface StatPair {
+export interface Stat {
   current: number;
   base: number;
+  disabled?: boolean;
 }
 
 export interface WeaponStatsViewModel {
-  fireRate: StatPair;
-  damage: StatPair;
-  velocity: StatPair;
-  adsSpreadGrowth: StatPair;
-  adsTime: StatPair;
-  sprintRecoveryTime: StatPair;
-  deployTime: StatPair;
-  reloadTime: StatPair;
-  movingAccuracy: StatPair;
-  hipSpreadStanding: StatPair;
-  hipSpreadMoving: StatPair;
-  worldSpot: StatPair;
-  minimapSpot: StatPair;
+  fireRate: Stat;
+  damage: Stat;
+  headshotDamage: Stat;
+  velocity: Stat;
+  adsSpreadGrowth: Stat;
+  adsTime: Stat;
+  sprintRecoveryTime: Stat;
+  deployTime: Stat;
+  reloadTime: Stat;
+  emptyReloadTime: Stat;
+  movingAccuracy: Stat;
+  hipSpreadStanding: Stat;
+  hipSpreadMoving: Stat;
+  worldSpot: Stat;
+  minimapSpot: Stat;
+  healthRegenDelay: Stat;
 }

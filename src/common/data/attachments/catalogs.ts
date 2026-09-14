@@ -1,4 +1,3 @@
-// TODO: review this file for code quality before considering it done
 import {ammoCatalog} from '@/data/ammo.ts';
 import {barrels, ergos, grips, lasers, lights, muzzles, sights} from '@/data/attachments.ts';
 

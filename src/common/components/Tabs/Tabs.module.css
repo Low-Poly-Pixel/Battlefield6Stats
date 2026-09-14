@@ -1,0 +1,71 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: var(--mantine-spacing-sm);
+  padding-left: var(--mantine-spacing-2xs);
+  padding-right: var(--mantine-spacing-2xs);
+  padding-bottom: var(--mantine-spacing-2xs);
+  border-bottom: 1px solid var(--mantine-color-dark-4);
+}
+
+.title {
+  composes: title from '../../styles/sectionHeading.module.css';
+}
+
+.list {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--mantine-spacing-3xs);
+}
+
+.list[data-layout='grid'] {
+  display: grid;
+  grid-template-columns: repeat(var(--tabs-columns), min-content);
+  justify-items: start;
+}
+
+.tab {
+  composes: root from '../../styles/actionable.module.css';
+  justify-content: flex-start;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.list .tab {
+  padding-top: var(--mantine-spacing-3xs);
+  padding-bottom: var(--mantine-spacing-3xs);
+  padding-left: var(--mantine-spacing-xs);
+  padding-right: var(--mantine-spacing-xs);
+  font-size: var(--mantine-font-size-xs);
+  min-width: 6rem;
+}
+
+.list .tab[data-active] {
+  background-color: var(--mantine-color-white);
+  border-color: var(--mantine-color-white);
+  color: var(--mantine-color-black);
+}
+
+.list .tab[data-active]:hover {
+  background-color: var(--mantine-color-white);
+}
+
+.icon {
+  composes: icon from '../../styles/actionable.module.css';
+}
+
+.list .tab .icon {
+  width: 1rem;
+  height: 1rem;
+}
+
+.list .tab[data-active] .icon {
+  filter: invert(1);
+}
+
+.divider {
+  align-self: stretch;
+  width: 2px;
+  background-color: var(--mantine-color-dark-3);
+}

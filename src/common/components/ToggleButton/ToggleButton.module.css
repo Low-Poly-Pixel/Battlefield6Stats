@@ -1,0 +1,17 @@
+.root {
+  composes: root from '../../styles/actionable.module.css';
+}
+
+.root[aria-pressed='true'] {
+  background-color: var(--mantine-color-white);
+  border-color: var(--mantine-color-white);
+  color: var(--mantine-color-black);
+}
+
+.root[aria-pressed='true']:hover {
+  opacity: 0.85;
+}
+
+.icon {
+  composes: icon from '../../styles/actionable.module.css';
+}

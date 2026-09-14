@@ -328,6 +328,8 @@ export const baseHeadshotMultByWeapon: Record<string, number> = {
   interdictor: 1.75,
   l115: 1.75,
   vssm: 1.8,
+  lmr27: 1.34,
+  grtcps: 1.34,
 };
 
 export const collateralMultOverrideByWeapon: Record<string, Record<string, number>> = {
@@ -360,7 +362,15 @@ export const collateralMultOverrideByWeapon: Record<string, Record<string, numbe
   },
 };
 
-export const highHeadshotMultWeaponIds: string[] = ['m39emr', 'svk86', 'svdm'];
+// These three DMRs are the only baseHeadshotMultByWeapon entries that also
+// carry Hollow Point ammo, and Hollow Point boosts their headshot multiplier
+// above the flat base value (source: hit_zones.json from
+// github.com/raymdl/BF6-Weapon-Analyzer).
+export const hollowPointHeadshotMultByWeapon: Record<string, number> = {
+  m39emr: 1.75,
+  svk86: 1.75,
+  svdm: 1.75,
+};
 
 export const limbClassMult: Record<string, number> = {
   auto: 0.84,

@@ -1,0 +1,29 @@
+.root {
+  composes: root from '../../styles/actionable.module.css';
+}
+
+.root:active {
+  background-color: var(--mantine-color-white);
+  border-color: var(--mantine-color-white);
+  color: var(--mantine-color-black);
+}
+
+.root[data-destructive='true'] {
+  border-color: var(--mantine-color-red-6);
+  color: var(--mantine-color-red-6);
+}
+
+.root[data-destructive='true']:hover {
+  background-color: var(--mantine-color-red-6);
+  color: var(--mantine-color-black);
+}
+
+.root[data-destructive='true']:active {
+  background-color: var(--mantine-color-red-7);
+  border-color: var(--mantine-color-red-7);
+  color: var(--mantine-color-white);
+}
+
+.icon {
+  composes: icon from '../../styles/actionable.module.css';
+}
