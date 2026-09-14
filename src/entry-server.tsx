@@ -7,7 +7,11 @@ import {mantineTheme} from './theme.ts';
 
 export const render = () =>
   renderToString(
-    <MantineProvider theme={mantineTheme} cssVariablesResolver={mantineCssVariableResolver} forceColorScheme="dark">
+    <MantineProvider
+      theme={mantineTheme}
+      cssVariablesResolver={mantineCssVariableResolver}
+      forceColorScheme="dark"
+    >
       <App />
     </MantineProvider>,
   );

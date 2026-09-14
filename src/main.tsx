@@ -18,14 +18,15 @@ import {mantineTheme} from './theme.ts';
 const container = document.getElementById('root')!;
 const app = (
   <StrictMode>
-    <MantineProvider theme={mantineTheme} cssVariablesResolver={mantineCssVariableResolver} forceColorScheme="dark">
+    <MantineProvider
+      theme={mantineTheme}
+      cssVariablesResolver={mantineCssVariableResolver}
+      forceColorScheme="dark"
+    >
       <App />
     </MantineProvider>
   </StrictMode>
 );
 
-if (container.hasChildNodes()) {
-  hydrateRoot(container, app);
-} else {
-  createRoot(container).render(app);
-}
+if (container.hasChildNodes()) hydrateRoot(container, app);
+else createRoot(container).render(app);

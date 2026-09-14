@@ -1,0 +1,64 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.body {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+}
+
+.main {
+  flex: 1;
+  padding: var(--mantine-spacing-md);
+  overflow: auto;
+}
+
+.loadout {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--mantine-spacing-md);
+}
+
+.mainColumn {
+  display: flex;
+  flex-direction: column;
+  gap: var(--mantine-spacing-md);
+}
+
+.weaponBox {
+  composes: root from './common/components/Panel/Panel.module.css';
+  width: 20rem;
+  max-width: 20rem;
+  max-height: 10rem;
+  padding: var(--mantine-spacing-md);
+  view-transition-name: weapon-card;
+}
+
+.velocityBox {
+  composes: root from './common/components/Panel/Panel.module.css';
+  width: 20rem;
+  max-width: 20rem;
+  padding: var(--mantine-spacing-md);
+  gap: var(--mantine-spacing-sm);
+}
+
+.attachmentBox {
+  composes: root from './common/components/Panel/Panel.module.css';
+  width: 100%;
+  max-width: 20rem;
+  padding: var(--mantine-spacing-md);
+  gap: var(--mantine-spacing-md);
+}
+
+.main .attachmentBox {
+  overflow: visible;
+}
+
+.attachmentGrid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--mantine-spacing-sm);
+}

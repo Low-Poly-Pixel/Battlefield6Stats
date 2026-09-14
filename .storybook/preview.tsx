@@ -17,7 +17,11 @@ import {mantineTheme} from '../src/theme.ts';
 const preview: Preview = {
   decorators: [
     Story => (
-      <MantineProvider theme={mantineTheme} cssVariablesResolver={mantineCssVariableResolver} forceColorScheme="dark">
+      <MantineProvider
+        theme={mantineTheme}
+        cssVariablesResolver={mantineCssVariableResolver}
+        forceColorScheme="dark"
+      >
         <Story />
       </MantineProvider>
     ),

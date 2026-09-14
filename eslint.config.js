@@ -14,7 +14,8 @@ import tseslint from 'typescript-eslint';
 
 const noWildcardImports = {
   selector: 'ImportNamespaceSpecifier',
-  message: 'Avoid wildcard (import * as X) imports — prefer named imports for clarity and tree-shaking.',
+  message:
+    'Avoid wildcard (import * as X) imports — prefer named imports for clarity and tree-shaking.',
 };
 
 const noFalsyTernaryConsequent = {
@@ -41,7 +42,7 @@ const noRelativeParentImports = {
 // (https://github.com/google/gts), the reference implementation of
 // https://google.github.io/styleguide/tsguide.html
 export default defineConfig(
-  {ignores: ['dist', 'dist-ssr']},
+  {ignores: ['dist', 'dist-ssr', '.claude']},
   js.configs.recommended,
   eslintConfigPrettier,
   {
@@ -69,13 +70,25 @@ export default defineConfig(
       'no-else-return': ['error', {allowElseIf: false}],
       'no-nested-ternary': 'error',
       curly: ['error', 'multi-line'],
+      // Keeps brace-less if bodies (allowed by `curly` above) on the same
+      // line as the condition, so they read as one-liners rather than
+      // wrapping onto their own unbraced line.
+      'nonblock-statement-body-position': ['error', 'beside'],
       'padding-line-between-statements': [
         'error',
         {blankLine: 'always', prev: '*', next: 'return'},
         {blankLine: 'always', prev: '*', next: 'if'},
       ],
-      'no-restricted-syntax': ['error', noWildcardImports, noFalsyTernaryConsequent, noRelativeParentImports],
-      'max-lines-per-function': ['warn', {max: 150, skipBlankLines: true, skipComments: true, IIFEs: true}],
+      'no-restricted-syntax': [
+        'error',
+        noWildcardImports,
+        noFalsyTernaryConsequent,
+        noRelativeParentImports,
+      ],
+      'max-lines-per-function': [
+        'warn',
+        {max: 150, skipBlankLines: true, skipComments: true, IIFEs: true},
+      ],
     },
   },
   {

@@ -4,7 +4,7 @@
 - [Google TypeScript Style Guide](https://google.github.io/styleguide/tsguide.html)
   rules via `gts`'s config: single quotes, semicolons, `eqeqeq`, no `var`, etc.
 - **Arrow functions everywhere, including components** (`const Button = () =>
-  {}`, not `function Button() {}`), via `eslint-plugin-prefer-arrow-functions`.
+{}`, not `function Button() {}`), via `eslint-plugin-prefer-arrow-functions`.
   There's no technical "right answer" here — React itself doesn't care, and
   it's a team-convention call — but this repo picked arrow for consistency.
   The "unless there's a good reason" exceptions are exactly the cases the
