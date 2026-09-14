@@ -9,8 +9,9 @@
 }
 
 .root[data-destructive='true'] {
-  border-color: var(--mantine-color-red-6);
-  color: var(--mantine-color-red-6);
+  background-color: var(--mantine-color-red-8);
+  border-color: var(--mantine-color-red-8);
+  color: var(--mantine-color-white);
 }
 
 .root[data-destructive='true']:hover {

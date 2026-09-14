@@ -31,6 +31,7 @@ export const CoreGunStats = ({stats}: CoreGunStatsProps) => (
       baseline={stats.velocity.base}
       min={0}
       max={1080}
+      unit={'m/s'}
       decimals={0}
     />
     <StatItem

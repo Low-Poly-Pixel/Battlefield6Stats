@@ -24,7 +24,11 @@ const getHipSpreadTierIndex = (weaponId: string): number => {
   return weapon ? HIP_SPREAD_STAND_TIERS.indexOf(weapon.spread.hipStand[0]) : -1;
 };
 
-const getHipSpreadShift = (weaponId: string, selections: AttachmentSelections): number => {
+const getHipSpreadShift = (
+  weaponId: string,
+  selections: AttachmentSelections,
+  signatureWeapon: boolean,
+): number => {
   const barrelMod =
     optionStat(BARREL_MAP, selections.barrel, barrel => barrel.hipSpreadTierMod) ?? 0;
   const muzzleMod =
@@ -32,35 +36,44 @@ const getHipSpreadShift = (weaponId: string, selections: AttachmentSelections): 
   const gripMod = optionStat(GRIP_MAP, selections.underbarrel, grip => grip.hipSpreadTierMod) ?? 0;
   const laserMod = optionStat(LASER_MAP, selections.laser, laser => laser.hipSpreadTierMod) ?? 0;
   const ammoMod = weaponAmmo[weaponId]?.effectOverrides?.[selections.ammo]?.hipSpreadTierMod ?? 0;
+  const weapon = weapons.find(item => item.id === weaponId);
+  const signatureMod = signatureWeapon && weapon?.class === 'smg' ? -1 : 0;
 
-  return barrelMod + muzzleMod + gripMod + laserMod + ammoMod;
+  return barrelMod + muzzleMod + gripMod + laserMod + ammoMod + signatureMod;
 };
 
 const getHipSpreadTierValue = (
   weaponId: string,
   selections: AttachmentSelections,
   tiers: number[],
+  signatureWeapon: boolean,
 ): number => {
   const baseIndex = getHipSpreadTierIndex(weaponId);
 
   if (baseIndex === -1) return 0;
 
   const tierIndex = Math.min(
-    Math.max(baseIndex - getHipSpreadShift(weaponId, selections), 0),
+    Math.max(baseIndex - getHipSpreadShift(weaponId, selections, signatureWeapon), 0),
     tiers.length - 1,
   );
 
   return tiers[tierIndex];
 };
 
-export const getHipSpreadStanding = (weaponId: string, selections: AttachmentSelections): number =>
-  getHipSpreadTierValue(weaponId, selections, HIP_SPREAD_STAND_TIERS);
+export const getHipSpreadStanding = (
+  weaponId: string,
+  selections: AttachmentSelections,
+  signatureWeapon = false,
+): number => getHipSpreadTierValue(weaponId, selections, HIP_SPREAD_STAND_TIERS, signatureWeapon);
 
 export const getBaseHipSpreadStanding = (weaponId: string): number =>
   getHipSpreadStanding(weaponId, getDefaultSelections(weaponId));
 
-export const getHipSpreadMoving = (weaponId: string, selections: AttachmentSelections): number =>
-  getHipSpreadTierValue(weaponId, selections, HIP_SPREAD_MOVE_TIERS);
+export const getHipSpreadMoving = (
+  weaponId: string,
+  selections: AttachmentSelections,
+  signatureWeapon = false,
+): number => getHipSpreadTierValue(weaponId, selections, HIP_SPREAD_MOVE_TIERS, signatureWeapon);
 
 export const getBaseHipSpreadMoving = (weaponId: string): number =>
   getHipSpreadMoving(weaponId, getDefaultSelections(weaponId));

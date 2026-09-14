@@ -16,7 +16,7 @@ interface DamageRangeChartProps {
 export const DamageRangeChart = ({weaponId, selections}: DamageRangeChartProps) => (
   <Panel title="Damage Falloff">
     <LineGraph
-      key={`${weaponId}-${selections.ammo}`}
+      key={weaponId}
       label="Body damage by range"
       data={getDamageRangeCurve(weaponId, selections)}
       damageMax={getDamageChartMax(weaponId)}

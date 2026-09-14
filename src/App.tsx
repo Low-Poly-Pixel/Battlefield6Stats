@@ -45,7 +45,7 @@ const App = () => {
   const tabWeapons = getWeaponsForTab(selectedTab);
   const selectedWeapon = weapons.find(weapon => weapon.id === selectedWeaponId);
   const loadout = getLoadoutViewModel(selectedWeaponId, selections);
-  const stats = getWeaponStatsViewModel(selectedWeaponId, selections);
+  const stats = getWeaponStatsViewModel(selectedWeaponId, selections, signatureWeapon);
 
   const handleTabChange = (value: string) => {
     withViewTransition(() => {
@@ -77,6 +77,7 @@ const App = () => {
 
     setSelections(getDefaultSelections(selectedWeaponId));
     setOpenCategory(null);
+    setSignatureWeapon(false);
     setResetTrigger(current => current + 1);
   };
 
@@ -150,15 +151,15 @@ const App = () => {
               <div className={classes.statsSection}>
                 <div className={classes.statsRow}>
                   <div className={classes.statsColumn}>
-                    <CoreGunStats key={`core-${selectedWeapon.id}`} stats={stats} />
-                    <MobilityStats key={`mobility-${selectedWeapon.id}`} stats={stats} />
-                    <HipfireStats key={`hipfire-${selectedWeapon.id}`} stats={stats} />
+                    <CoreGunStats stats={stats} />
+                    <MobilityStats stats={stats} />
+                    <HipfireStats stats={stats} />
                   </div>
                   <div className={classes.statsColumn}>
-                    <AmmoModifiersStats key={`ammo-${selectedWeapon.id}`} stats={stats} />
-                    <ReloadStats key={`reload-${selectedWeapon.id}`} stats={stats} />
-                    <StealthStats key={`stealth-${selectedWeapon.id}`} stats={stats} />
-                    <AccuracyStats key={`accuracy-${selectedWeapon.id}`} stats={stats} />
+                    <AmmoModifiersStats stats={stats} />
+                    <ReloadStats stats={stats} />
+                    <StealthStats stats={stats} />
+                    <AccuracyStats stats={stats} />
                   </div>
                 </div>
                 <DamageRangeChart weaponId={selectedWeapon.id} selections={selections} />

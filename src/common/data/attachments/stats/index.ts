@@ -39,6 +39,7 @@ const EMPTY_STAT: Stat = {current: 0, base: 0};
 export const getWeaponStatsViewModel = (
   weaponId: string | null,
   selections: AttachmentSelections | null,
+  signatureWeapon = false,
 ): WeaponStatsViewModel => {
   if (!weaponId || !selections) {
     return {
@@ -80,17 +81,26 @@ export const getWeaponStatsViewModel = (
       current: getAdsSpreadGrowth(weaponId, selections.barrel),
       base: getBaseAdsSpreadGrowth(weaponId),
     },
-    adsTime: {current: getAdsTime(weaponId, selections), base: getBaseAdsTime(weaponId)},
+    adsTime: {
+      current: getAdsTime(weaponId, selections, signatureWeapon),
+      base: getBaseAdsTime(weaponId),
+    },
     adsMoveSpeed: {
       current: getAdsMoveSpeed(weaponId, selections),
       base: getBaseAdsMoveSpeed(weaponId),
     },
     sprintRecoveryTime: {
-      current: getSprintRecoveryTime(weaponId, selections),
+      current: getSprintRecoveryTime(weaponId, selections, signatureWeapon),
       base: getBaseSprintRecoveryTime(weaponId),
     },
-    sprintSpeed: {current: getSprintSpeed(weaponId), base: getBaseSprintSpeed(weaponId)},
-    deployTime: {current: getDeployTime(weaponId, selections), base: getBaseDeployTime(weaponId)},
+    sprintSpeed: {
+      current: getSprintSpeed(weaponId, signatureWeapon),
+      base: getBaseSprintSpeed(weaponId),
+    },
+    deployTime: {
+      current: getDeployTime(weaponId, selections, signatureWeapon),
+      base: getBaseDeployTime(weaponId),
+    },
     reloadTime: {current: getReloadTime(weaponId, selections), base: getBaseReloadTime(weaponId)},
     emptyReloadTime: {
       current: getEmptyReloadTime(weaponId, selections),
@@ -102,11 +112,11 @@ export const getWeaponStatsViewModel = (
       base: getBaseMovingAccuracy(weaponId),
     },
     hipSpreadStanding: {
-      current: getHipSpreadStanding(weaponId, selections),
+      current: getHipSpreadStanding(weaponId, selections, signatureWeapon),
       base: getBaseHipSpreadStanding(weaponId),
     },
     hipSpreadMoving: {
-      current: getHipSpreadMoving(weaponId, selections),
+      current: getHipSpreadMoving(weaponId, selections, signatureWeapon),
       base: getBaseHipSpreadMoving(weaponId),
     },
     worldSpot: {current: getWorldSpotOnFire(selections), base: getBaseWorldSpotOnFire(weaponId)},

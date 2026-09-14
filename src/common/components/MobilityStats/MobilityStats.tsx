@@ -25,6 +25,7 @@ export const MobilityStats = ({stats}: MobilityStatsProps) => (
       baseline={stats.adsMoveSpeed.base}
       min={0}
       max={1}
+      unit="x"
       decimals={2}
     />
     <StatBar

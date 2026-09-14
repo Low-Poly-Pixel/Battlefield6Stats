@@ -1,7 +1,12 @@
 import type {ReactNode} from 'react';
 import {useEffect} from 'react';
 
-import {DIRECTION_ARROW, getDirection, isBaselineInRange} from '@/common/statDirection.ts';
+import {
+  DIRECTION_ARROW,
+  getArrowDirection,
+  getDirection,
+  isBaselineInRange,
+} from '@/common/statDirection.ts';
 import {formatMilli, toMilli} from '@/common/statFormat.ts';
 
 import classes from './StatItem.module.css';
@@ -44,7 +49,8 @@ export const StatItem = ({
   const minMilli = toMilli(min);
   const maxMilli = toMilli(max);
   const direction = getDirection(valueMilli, baselineMilli, invert);
-  const arrow = DIRECTION_ARROW[direction];
+  const arrowDirection = getArrowDirection(valueMilli, baselineMilli);
+  const arrow = DIRECTION_ARROW[arrowDirection];
   const formattedValue = formatValue(formatMilli(valueMilli, decimals), unit);
   const displayValue = getDisplayValue(disabled, arrow, formattedValue);
 

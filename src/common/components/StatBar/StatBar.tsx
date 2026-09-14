@@ -5,6 +5,7 @@ import {useEffect} from 'react';
 import {
   DIRECTION_ARROW,
   DIRECTION_COLOR,
+  getArrowDirection,
   getDirection,
   isBaselineInRange,
 } from '@/common/statDirection.ts';
@@ -44,11 +45,8 @@ const getDisplayValue = (disabled: boolean, arrow: string, formatted: string): s
   return arrow ? `${arrow} ${formatted}` : formatted;
 };
 
-const toPercent = (rawValue: number, min: number, max: number, invert = false): number => {
-  const percent = ((rawValue - min) / (max - min)) * 100;
-
-  return invert ? 100 - percent : percent;
-};
+const toPercent = (rawValue: number, min: number, max: number): number =>
+  ((rawValue - min) / (max - min)) * 100;
 
 type TrackSegments = {
   baselinePercent: number;
@@ -63,9 +61,8 @@ const getTrackSegments = (
   baseline: number,
   min: number,
   max: number,
-  invert: boolean,
 ): TrackSegments => {
-  const baselinePercent = toPercent(baseline, min, max, invert);
+  const baselinePercent = toPercent(baseline, min, max);
   const lower = Math.min(percent, baselinePercent);
   const upper = Math.max(percent, baselinePercent);
 
@@ -88,16 +85,16 @@ export const StatBar = ({
   const minMilli = toMilli(min);
   const maxMilli = toMilli(max);
   const clampedBaselineMilli = Math.min(Math.max(baselineMilli, minMilli), maxMilli);
-  const percent = toPercent(valueMilli, minMilli, maxMilli, invert);
+  const percent = toPercent(valueMilli, minMilli, maxMilli);
   const direction = getDirection(valueMilli, clampedBaselineMilli, invert);
+  const arrowDirection = getArrowDirection(valueMilli, clampedBaselineMilli);
   const color = DIRECTION_COLOR[direction];
-  const arrow = DIRECTION_ARROW[direction];
+  const arrow = DIRECTION_ARROW[arrowDirection];
   const {baselinePercent, baseValue, gapValue} = getTrackSegments(
     percent,
     clampedBaselineMilli,
     minMilli,
     maxMilli,
-    invert,
   );
   const isBaseOnly = gapValue <= 0;
   const baseSectionLabel = isBaseOnly ? label : undefined;
@@ -131,6 +128,7 @@ export const StatBar = ({
       <Progress.Root className={classes.track} size="sm" radius={0}>
         {!disabled ? (
           <Progress.Section
+            key={`base-${String(value)}`}
             aria-label={baseSectionLabel}
             withAria={isBaseOnly}
             value={baseValue}
@@ -141,6 +139,7 @@ export const StatBar = ({
         ) : null}
         {!disabled && !isBaseOnly ? (
           <Progress.Section
+            key={`accent-${String(value)}`}
             aria-label={label}
             value={gapValue}
             color={color}
