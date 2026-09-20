@@ -2,7 +2,7 @@
 
 [![Live Demo](https://img.shields.io/badge/live-demo-blue)](https://low-poly-pixel.github.io/Battlefield6Stats/)
 
-Currently a work in progress*
+Currently a work in progress, I am resolving the data model before expanding out the UI functionality*
 
 This is a fan made weapon and ballistics stats reference for Battlefield 6.
 
